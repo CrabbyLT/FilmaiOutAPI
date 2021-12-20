@@ -18,21 +18,43 @@ namespace FilmaiOutAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetLikedMovies()
+        public ActionResult GetSubtitles()
         {
             var reviews = _service.GetSubtitles();
             return new OkObjectResult(reviews);
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult> DeleteUserAsync(int id)
+        public async Task<ActionResult> DeleteSubtitlesAsync(int id)
         {
             await _service.DeleteSubtitleList(id);
 
             return new OkObjectResult(new Response()
             {
                 Status = StatusCodes.Status200OK,
-                Message = "Post deletion was successful"
+                Message = "Subtitile deletion was successful"
+            });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateSubtitileListCommentAsync([FromBody] SubtitleListModel subtitleListModel)
+        {
+            await _service.CreateSubtitleAsync(subtitleListModel);
+            return new OkObjectResult(new Response()
+            {
+                Status = StatusCodes.Status200OK,
+                Message = "Subtitle list created successfully"
+            });
+        }
+
+        [HttpPost("{id:int}")]
+        public async Task<ActionResult> UpdateSubtitileListCommentAsync([FromQuery] string language,int id)
+        {
+            await _service.UpdateSubtitleAsync(language,id);
+            return new OkObjectResult(new Response()
+            {
+                Status = StatusCodes.Status200OK,
+                Message = "Subtitle list updated successfully"
             });
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using FilmaiOutAPI.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FilmaiOutAPI.Services
@@ -18,6 +19,15 @@ namespace FilmaiOutAPI.Services
         public async Task DeleteSubtitleList(int id)
         {
             await _repository.DeleteSubList(id);
+        }
+        internal async Task<int> CreateSubtitleAsync(SubtitleListModel subtitleListModel)
+        {
+            return await _repository.CreateSubtitleListAsync(subtitleListModel);
+        }
+
+        internal async Task<int> UpdateSubtitleAsync(string language,int id)
+        {
+            return await _repository.UpdateSubtitleListAsync(language,id);
         }
     }
 }
