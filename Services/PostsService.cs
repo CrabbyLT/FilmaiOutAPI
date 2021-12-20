@@ -13,6 +13,11 @@ namespace FilmaiOutAPI.Services
             _repository = repository;
         }
 
+        internal Comment GetComment(int id)
+        {
+            return _repository.GetPostCommentById(id);
+        }
+
         internal Post GetPost(int id)
         {
             return _repository.GetPostById(id);
