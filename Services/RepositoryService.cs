@@ -15,6 +15,48 @@ namespace FilmaiOutAPI.Services
             _context = filmaiOutContext;
         }
 
+        internal IEnumerable<SubtitleList> GetSubList()
+        {
+            return _context.SubtitleLists.Take(10).Skip(0).ToList();
+        }
+        internal async Task DeleteSubList(int id)
+        {
+            var subtitle = _context.SubtitleLists.FirstOrDefault(p => p.Id.Equals(id));
+            if (subtitle != null)
+            {
+                _context.SubtitleLists.Remove(subtitle);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        internal IEnumerable<MovieReview> GetMovieReview()
+        {
+            return _context.MovieReviews.Take(10).Skip(0).ToList();
+        }
+
+        internal async Task DeleteMovieReview(int id)
+        {
+            var review = _context.MovieReviews.FirstOrDefault(p => p.Id.Equals(id));
+            if (review != null)
+            {
+                _context.MovieReviews.Remove(review);
+                await _context.SaveChangesAsync();
+            }
+        }
+        internal IEnumerable<MovieList> GetLikedMovieLists()
+        {
+            return _context.MovieLists.Take(10).Skip(0).ToList();
+        }
+        internal async Task DeleteLikedMovieLists(int id)
+        {
+            var list = _context.MovieLists.FirstOrDefault(p => p.Id.Equals(id));
+            if (list != null)
+            {
+                _context.MovieLists.Remove(list);
+                await _context.SaveChangesAsync();
+            }
+        }
+
         internal Post GetPostById(int id)
         {
             return _context.Posts.FirstOrDefault(p => p.Id.Equals(id));

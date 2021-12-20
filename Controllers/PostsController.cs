@@ -78,5 +78,12 @@ namespace FilmaiOutAPI.Controllers
                 Message = "Comment deleted successfully"
             });
         }
+
+        [HttpGet("post/{id:int}/comment/{commentId:int}")]
+        public ActionResult GetComment(int id, int commentId)
+        {
+            var posts = _service.GetComment(commentId);
+            return new OkObjectResult(posts);
+        }
     }
 }
