@@ -15,6 +15,20 @@ namespace FilmaiOutAPI.Services
             _context = filmaiOutContext;
         }
 
+        internal IEnumerable<SubtitleList> GetSubList()
+        {
+            return _context.SubtitleLists.Take(10).Skip(0).ToList();
+        }
+        internal async Task DeleteSubList(int id)
+        {
+            var subtitle = _context.SubtitleLists.FirstOrDefault(p => p.Id.Equals(id));
+            if (subtitle != null)
+            {
+                _context.SubtitleLists.Remove(subtitle);
+                await _context.SaveChangesAsync();
+            }
+        }
+
         internal IEnumerable<MovieReview> GetMovieReview()
         {
             return _context.MovieReviews.Take(10).Skip(0).ToList();
