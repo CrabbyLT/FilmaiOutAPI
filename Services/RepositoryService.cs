@@ -15,6 +15,33 @@ namespace FilmaiOutAPI.Services
             _context = filmaiOutContext;
         }
 
+        internal async Task<int> UpdateMovieListAsync(string name, string description, int id)
+        {
+            var movieList = _context.MovieLists.FirstOrDefault(p => p.Id.Equals(id));
+            if (movieList != null)
+            {
+                movieList.Text = name;
+                movieList.Description = description;
+                _context.MovieLists.Update(movieList);
+                await _context.SaveChangesAsync();
+            }
+            return movieList.Id;
+        }
+
+        internal async Task<int> CreateMovieListAsync(MovieListModel movieListModel)
+        {
+            var subtitleList = await _context.MovieLists.AddAsync(new MovieList()
+            {
+                Text = movieListModel.Name,
+                Description = movieListModel.Description,
+                CreatedAt = DateTime.Now
+                //FkUsers = movieListModel.UserName    //UNCOMMENT WHEN FKUSERS ARE HERE
+            });
+            await _context.SaveChangesAsync();
+
+            return subtitleList.Entity.Id;
+        }
+
         internal async Task<int> CreateSubtitleListAsync(SubtitleListModel subtitleListModel)
         {
             var subtitleList = await _context.SubtitleLists.AddAsync(new SubtitleList()
