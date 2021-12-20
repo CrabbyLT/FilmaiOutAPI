@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using FilmaiOutAPI.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FilmaiOutAPI.Services
@@ -20,6 +21,15 @@ namespace FilmaiOutAPI.Services
         public async Task DeleteMovieList(int id)
         {
             await _repository.DeleteLikedMovieLists(id);
+        }
+
+        internal async Task<int> CreateMovieList(MovieListModel movieListModel)
+        {
+            return await _repository.CreateMovieListAsync(movieListModel);
+        }
+        internal async Task<int> UpdateMovieList(string name, string description, int id)
+        {
+            return await _repository.UpdateMovieListAsync(name,description,id);
         }
     }
 }
