@@ -123,6 +123,7 @@ namespace FilmaiOutAPI.Services
         {
             var post = await _context.Posts.AddAsync(new Post()
             {
+                FkUsersName=postModel.UserName,
                 Name = postModel.Name,
                 Text = postModel.Text,
                 CreatedAt = DateTime.Now,
