@@ -15,6 +15,11 @@ namespace FilmaiOutAPI.Services
             _context = filmaiOutContext;
         }
 
+        internal IEnumerable<Comment> GetPostCommentsById(int postId)
+        {
+            return _context.Comments.Where(p => p.FkPostsId == postId).ToList();
+        }
+
         internal async Task<int> UpdateMovieListAsync(string name, string description, int id)
         {
             var movieList = _context.MovieLists.FirstOrDefault(p => p.Id.Equals(id));
@@ -140,7 +145,10 @@ namespace FilmaiOutAPI.Services
                 throw new ArgumentNullException(nameof(postModel));
             }
 
-            post = UpdatePostFromPostUpdateModel(post, postModel);
+            //post = UpdatePostFromPostUpdateModel(post, postModel);
+            post.Text = postModel.Text;
+            post.Name = postModel.Title;
+            post.LastEditedAt = DateTime.Now;
             _context.Posts.Update(post);
             await _context.SaveChangesAsync();
 
@@ -218,19 +226,19 @@ namespace FilmaiOutAPI.Services
 
             return result != null;
         }
-        private static Post UpdatePostFromPostUpdateModel(Post post, PostUpdateModel postModel)
-        {
-            return new Post()
-            {
-                Id = post.Id,
-                Name = postModel.Name,
-                Text = postModel.Text,
-                Comments = post.Comments,
-                Likes = post.Likes,
-                Dislikes = post.Dislikes,
-                CreatedAt = post.CreatedAt,
-                LastEditedAt = DateTime.Now,
-            };
-        }
+        //private static Post UpdatePostFromPostUpdateModel(Post post, PostUpdateModel postModel)
+        //{
+        //    return new Post()
+        //    {
+        //        Id = post.Id,
+        //        Name = postModel.Name,
+        //        Text = postModel.Text,
+        //        Comments = post.Comments,
+        //        Likes = post.Likes,
+        //        Dislikes = post.Dislikes,
+        //        CreatedAt = post.CreatedAt,
+        //        LastEditedAt = DateTime.Now,
+        //    };
+        //}
     }
 }

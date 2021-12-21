@@ -35,7 +35,7 @@ namespace FilmaiOutAPI.Controllers
         public async Task<ActionResult> CreatePostAsync([FromBody] PostModel postModel)
         {
             var postId = await _service.CreatePostAsync(postModel);
-            return new CreatedResult(nameof(GetPost), postId) ;
+            return CreatedAtAction(nameof(GetPost), new { id = postId }, postModel);
         }
 
         [HttpPut("post")]
@@ -66,6 +66,13 @@ namespace FilmaiOutAPI.Controllers
                 Status = StatusCodes.Status200OK,
                 Message = "Comment created successfully"
             });
+        }
+
+        [HttpGet("post/{id:int}/comment")]
+        public async Task<ActionResult> GetAllCommentsByPost(int id)
+        {
+            var posts = _service.GetComments(id);
+            return new OkObjectResult(posts);
         }
 
         [HttpDelete("post/{id:int}/comment/{commentId:int}")]

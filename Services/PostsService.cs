@@ -18,6 +18,10 @@ namespace FilmaiOutAPI.Services
             return _repository.GetPostCommentById(id);
         }
 
+        internal IEnumerable<Comment> GetComments(int id)
+        {
+            return _repository.GetPostCommentsById(id);
+        }
         internal Post GetPost(int id)
         {
             return _repository.GetPostById(id);
