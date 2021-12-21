@@ -34,8 +34,8 @@ namespace FilmaiOutAPI.Services
             {
                 Text = movieListModel.Name,
                 Description = movieListModel.Description,
-                CreatedAt = DateTime.Now
-                //FkUsers = movieListModel.UserName    //UNCOMMENT WHEN FKUSERS ARE HERE
+                CreatedAt = DateTime.Now,
+                FkUsersName = movieListModel.UserName
             });
             await _context.SaveChangesAsync();
 
@@ -209,11 +209,12 @@ namespace FilmaiOutAPI.Services
             return _context.Users.FirstOrDefault(u => u.Email.Equals(loginModel.Email) && u.PasswordHash.Equals(loginModel.PasswordHash)); 
         }
 
-        internal bool DeleteUser(string name)
+        internal async Task<bool> DeleteUserAsync(string name)
         {
             var user = GetUserByName(name);
             var result = _context.Users.Remove(user);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+            _ = GetUserByName(name);
 
             return result != null;
         }

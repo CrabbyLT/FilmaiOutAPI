@@ -48,9 +48,9 @@ namespace FilmaiOutAPI.Controllers
         }
 
         [HttpDelete]
-        public ActionResult DeleteUserAsync(string name)
+        public async Task<ActionResult> DeleteUserAsync(string name)
         {
-            return _userServices.DeleteUserAsync(name)
+            return await _userServices.DeleteUserAsync(name)
                 ? new OkObjectResult(new Response()
                 {
                     Status = StatusCodes.Status200OK,

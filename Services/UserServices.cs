@@ -29,9 +29,9 @@ namespace FilmaiOutAPI.Services
             return _repositoryService.CheckIfUserExists(loginModel);
         }
 
-        public bool DeleteUserAsync(string name)
+        public Task<bool> DeleteUserAsync(string name)
         {
-            return _repositoryService.DeleteUser(name);
+            return _repositoryService.DeleteUserAsync(name);
         }
     }
 }
