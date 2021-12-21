@@ -200,6 +200,7 @@ namespace FilmaiOutAPI.Services
 
         public async Task InsertUserAsync(RegisterModel user)
         {
+            
             await _context.Users.AddAsync(new User()
             {
                 Administrator = false,
@@ -209,6 +210,14 @@ namespace FilmaiOutAPI.Services
                 Name = user.Name,
                 PasswordHash = user.PasswordHash
             }); 
+            await _context.SaveChangesAsync();
+        }
+        public async Task UpdateUserAsync(UserUpdateModel user)
+        {
+            var userDB = GetUserByName(user.Name);
+            userDB.Age = user.Age;
+            userDB.Email = user.Email;
+            _context.Users.Update(userDB);
             await _context.SaveChangesAsync();
         }
 

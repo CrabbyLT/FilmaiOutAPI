@@ -47,6 +47,22 @@ namespace FilmaiOutAPI.Controllers
                 });
         }
 
+        [HttpPut]
+        public async Task<ActionResult> UpdaterAsync([FromBody] UserUpdateModel registerModel)
+        {
+            return await _userServices.UpdateAsync(registerModel)
+                ? new OkObjectResult(new Response()
+                {
+                    Status = StatusCodes.Status200OK,
+                    Message = "Update successful"
+                })
+                : new BadRequestObjectResult(new Response()
+                {
+                    Status = StatusCodes.Status404NotFound,
+                    Message = "Update failed"
+                });
+        }
+
         [HttpDelete]
         public async Task<ActionResult> DeleteUserAsync(string name)
         {

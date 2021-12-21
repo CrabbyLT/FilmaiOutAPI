@@ -1,4 +1,5 @@
-﻿using FilmaiOutAPI.Models.Auth;
+﻿using FilmaiOutAPI.Models;
+using FilmaiOutAPI.Models.Auth;
 using System.Threading.Tasks;
 
 namespace FilmaiOutAPI.Services
@@ -20,6 +21,18 @@ namespace FilmaiOutAPI.Services
             }
 
             await _repositoryService.InsertUserAsync(registerModel);
+
+            return true;
+        }
+
+        public async Task<bool> UpdateAsync(UserUpdateModel userModel)
+        {
+            if (userModel == null)
+            {
+                return false;
+            }
+
+            await _repositoryService.UpdateUserAsync(userModel);
 
             return true;
         }
