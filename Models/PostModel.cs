@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FilmaiOutAPI.Models
+﻿namespace FilmaiOutAPI.Models
 {
     public class PostModel
     {

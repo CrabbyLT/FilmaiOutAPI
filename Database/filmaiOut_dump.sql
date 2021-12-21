@@ -59,7 +59,7 @@ CREATE TABLE movie_lists (
     fk_users_name TEXT REFERENCES users(name) ON DELETE CASCADE
 );
 CREATE TABLE movies (
-    id SERIAL PRIMARY KEY,
+    id TEXT PRIMARY KEY,
     name TEXT NOT NULL,
     created_at TIMESTAMP NOT NULL,
     duration INTEGER NOT NULL CHECK (duration >= 0),
@@ -69,7 +69,7 @@ CREATE TABLE movies (
 CREATE TABLE list_movies (
     id SERIAL PRIMARY KEY,
     fk_movie_lists INTEGER REFERENCES movie_lists(id) ON DELETE CASCADE,
-    fk_movies INTEGER REFERENCES movies(id) ON DELETE CASCADE
+    fk_movies TEXT REFERENCES movies(id) ON DELETE CASCADE
 );
 CREATE TABLE movie_reviews (
     id SERIAL PRIMARY KEY,
@@ -80,7 +80,7 @@ CREATE TABLE movie_reviews (
     score NUMERIC(2, 0) NOT NULL DEFAULT 0 CHECK (score >= 0),
     last_edited_at TIMESTAMP NOT NULL DEFAULT NOW(),
     fk_users TEXT REFERENCES users(name) ON DELETE CASCADE,
-    fk_movies INTEGER REFERENCES movies(id) ON DELETE CASCADE
+    fk_movies TEXT REFERENCES movies(id) ON DELETE CASCADE
 );
 CREATE TABLE movie_reports (
     id SERIAL PRIMARY KEY,
@@ -89,13 +89,13 @@ CREATE TABLE movie_reports (
     views INTEGER NOT NULL DEFAULT 0 CHECK (views >= 0),
     total_movie_lists INTEGER NOT NULL DEFAULT 0 CHECK (total_movie_lists >= 0),
     fk_users TEXT REFERENCES users(name) ON DELETE CASCADE,
-    fk_movies INTEGER REFERENCES movies(id) ON DELETE CASCADE
+    fk_movies TEXT REFERENCES movies(id) ON DELETE CASCADE
 );
 CREATE TABLE subtitle_lists (
     id SERIAL PRIMARY KEY,
     language CHARACTER(20),
     fk_users TEXT REFERENCES users(name) ON DELETE CASCADE,
-    fk_movies INTEGER REFERENCES movies(id) ON DELETE CASCADE
+    fk_movies TEXT REFERENCES movies(id) ON DELETE CASCADE
 );
 CREATE TABLE subtitle (
     start_at INTEGER NOT NULL CHECK (start_at >= 0),
@@ -114,14 +114,14 @@ INSERT INTO comment_reports (text, created_at, reviewed, accepted, fk_comments_i
 
 INSERT INTO movie_lists (text, likes, dislikes, created_at, description, fk_users_name) VALUES ('Christopher Nolans films', 20, 5, '2021-12-19 03:04:05', 'I simply love Christopher Nolan', 'Audinius'), ('My personal favorites', 3, 0, '2021-12-10 07:15:00', 'Im a huge film enjoyer, and this is my favorite movies. Enjoy.', 'Bemwsas');
 
-INSERT INTO movies (name, created_at, duration, description, language) VALUES ('Inception', '2010-10-12', '7689', 'A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster.', 'English'), ('Tenet', '2020-06-05', '9000', 'Armed with only one word, Tenet, and fighting for the survival of the entire world, a Protagonist journeys through a twilight world of international espionage on a mission that will unfold in something beyond real time.', 'English'), ('Interstellar', '2014-03-15', '10323', 'A team of explorers travel through a wormhole in space in an attempt to ensure humanitys survival.', 'English'), ('Ashes in the Snow', '2018-12-15', '5211', 'In 1941, a 16-year-old aspiring artist and her family are deported to Siberia amidst Stalins brutal dismantling of the Baltic region. One girls passion for art and her never-ending hope will break the silence of history.', 'Lithuanian');
+INSERT INTO movies (id, name, created_at, duration, description, language) VALUES ('tt1375666','Inception', '2010-10-12', '7689', 'A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster.', 'English'), ('tt6723592','Tenet', '2020-06-05', '9000', 'Armed with only one word, Tenet, and fighting for the survival of the entire world, a Protagonist journeys through a twilight world of international espionage on a mission that will unfold in something beyond real time.', 'English'), ('tt0816692','Interstellar', '2014-03-15', '10323', 'A team of explorers travel through a wormhole in space in an attempt to ensure humanitys survival.', 'English'), ('tt3759298', 'Ashes in the Snow', '2018-12-15', '5211', 'In 1941, a 16-year-old aspiring artist and her family are deported to Siberia amidst Stalins brutal dismantling of the Baltic region. One girls passion for art and her never-ending hope will break the silence of history.', 'Lithuanian');
 
-INSERT INTO list_movies (fk_movie_lists, fk_movies) VALUES (1, 1), (1, 2), (1, 3), (2, 3), (2, 4);
+INSERT INTO list_movies (fk_movie_lists, fk_movies) VALUES (1, 'tt1375666'), (1, 'tt6723592'), (1, 'tt0816692'), (2, 'tt0816692'), (2, 'tt3759298');
 
-INSERT INTO movie_reviews (text, created_at, likes, dislikes, score, last_edited_at, fk_users, fk_movies) VALUES ('What a great film. Christopher Nolan never dissapoints me.', '2021-12-06 09:47:13', 8, 1,  10, '2021-12-06 09:47:13', 'Audinius', 2);
+INSERT INTO movie_reviews (text, created_at, likes, dislikes, score, last_edited_at, fk_users, fk_movies) VALUES ('What a great film. Christopher Nolan never dissapoints me.', '2021-12-06 09:47:13', 8, 1,  10, '2021-12-06 09:47:13', 'Audinius', 'tt6723592');
 
-INSERT INTO movie_reports (generated_at, average_score, views, total_movie_lists, fk_users, fk_movies) VALUES ('2021-12-07', 10, 27, 1, 'admin', 2);
+INSERT INTO movie_reports (generated_at, average_score, views, total_movie_lists, fk_users, fk_movies) VALUES ('2021-12-07', 10, 27, 1, 'admin', 'tt6723592');
 
-INSERT INTO subtitle_lists (language, fk_users, fk_movies) VALUES ('English', 'Audinius', 2);
+INSERT INTO subtitle_lists (language, fk_users, fk_movies) VALUES ('English', 'Audinius', 'tt6723592');
 
 INSERT INTO subtitle (start_at, text, finish_at, fk_subtitle_lists) VALUES (10, 'Hello', 20, 1), (200, '*intense music*', 220, 1);

@@ -17,7 +17,7 @@ namespace FilmaiOutAPI.Controllers
             _service = service;
         }
 
-        [HttpGet]
+        [HttpGet("reviews")]
         public ActionResult GetLikedMovies()
         {
             var reviews = _service.GetMovieList();
@@ -56,6 +56,17 @@ namespace FilmaiOutAPI.Controllers
                 Status = StatusCodes.Status200OK,
                 Message = "Movie list updated successfully"
             });
+        }
+
+        [HttpPost("{movieListId:int}/movie/{movieImdbId}")]
+        public async Task<ActionResult> AddMovieToMovieList(int movieListId, string movieImdbId)
+        {
+            await _service.AddMovieToMovieList(movieListId, movieImdbId);
+            return new OkObjectResult(new Response()
+            {
+                Status = StatusCodes.Status200OK,
+                Message = "Movie inserted successfully"
+            }) ;
         }
     }
 }

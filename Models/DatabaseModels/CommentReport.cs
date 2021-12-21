@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 
 #nullable disable
 
-namespace FilmaiOutAPI
+namespace FilmaiOutAPI.Models.DatabaseModels
 {
     public partial class CommentReport
     {

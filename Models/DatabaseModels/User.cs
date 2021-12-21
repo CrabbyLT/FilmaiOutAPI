@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 #nullable disable
 
-namespace FilmaiOutAPI
+namespace FilmaiOutAPI.Models.DatabaseModels
 {
     public partial class User
     {
@@ -20,7 +19,6 @@ namespace FilmaiOutAPI
 
         public string Name { get; set; }
         public string Email { get; set; }
-        [JsonIgnore]
         public string PasswordHash { get; set; }
         public short Age { get; set; }
         public bool Administrator { get; set; }

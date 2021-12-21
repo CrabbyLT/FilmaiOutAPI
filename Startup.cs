@@ -21,6 +21,9 @@ namespace FilmaiOutAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<FilmaiOutContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("FilmaiOut_Db")));
+
             services.AddScoped<RepositoryService>();
             services.AddScoped<UserServices>();
             services.AddScoped<MovieListsService>();
@@ -28,8 +31,6 @@ namespace FilmaiOutAPI
             services.AddScoped<MovieSubtitlesService>();
             services.AddScoped<PostsService>();
 
-            services.AddDbContext<FilmaiOutContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("FilmaiOut_Db")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

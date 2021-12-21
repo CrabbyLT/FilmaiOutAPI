@@ -1,4 +1,5 @@
 ﻿using FilmaiOutAPI.Models;
+using FilmaiOutAPI.Models.DatabaseModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -30,6 +31,11 @@ namespace FilmaiOutAPI.Services
         internal async Task<int> UpdateMovieList(string name, string description, int id)
         {
             return await _repository.UpdateMovieListAsync(name,description,id);
+        }
+
+        internal Task AddMovieToMovieList(int movieListId, string movieImdbId)
+        {
+            return _repository.AddMovieToMovieList(movieListId, movieImdbId);
         }
     }
 }

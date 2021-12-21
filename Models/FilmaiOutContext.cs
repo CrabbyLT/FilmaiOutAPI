@@ -1,6 +1,5 @@
-﻿using System;
+﻿using FilmaiOutAPI.Models.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 

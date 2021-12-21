@@ -1,5 +1,7 @@
 ﻿using FilmaiOutAPI.Models;
 using FilmaiOutAPI.Models.Auth;
+using FilmaiOutAPI.Models.DatabaseModels;
+using IMDbApiLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +12,12 @@ namespace FilmaiOutAPI.Services
     public class RepositoryService
     {
         private readonly FilmaiOutContext _context;
+        private readonly ApiLib _appLib;
+
         public RepositoryService(FilmaiOutContext filmaiOutContext)
         {
             _context = filmaiOutContext;
+            _appLib = new ApiLib("k_wh57q0cw");
         }
 
         internal IEnumerable<Comment> GetPostCommentsById(int postId)
@@ -31,6 +36,32 @@ namespace FilmaiOutAPI.Services
                 await _context.SaveChangesAsync();
             }
             return movieList.Id;
+        }
+
+        internal async Task AddMovieToMovieList(int movieListId, string movieImdbId)
+        {
+            var movieList = GetMovieList(movieListId);
+            if (_context.Movies.FirstOrDefault(movie => movie.Id == movieImdbId) == null)
+            {
+                var movie = await _appLib.TitleAsync(movieImdbId);
+                var movieToDb = new Movie()
+                {
+                    Id = movie.Id,
+                    CreatedAt = DateTime.Parse(movie.ReleaseDate),
+                    Description = movie.Plot,
+                    Duration = string.IsNullOrWhiteSpace(movie.RuntimeMins) ? 0 : Convert.ToInt32(movie.RuntimeMins),
+                    Language = movie.Languages.Split(", ").First(),
+                    Name = movie.FullTitle
+                };
+                await _context.Movies.AddAsync(movieToDb);
+            }
+            
+            await _context.ListMovies.AddAsync(new ListMovie()
+            {
+                FkMovies = movieImdbId,
+                FkMovieLists = movieList.Id
+            });
+            await _context.SaveChangesAsync();
         }
 
         internal async Task<int> CreateMovieListAsync(MovieListModel movieListModel)
@@ -91,6 +122,11 @@ namespace FilmaiOutAPI.Services
             return _context.MovieReviews.Take(10).Skip(0).ToList();
         }
 
+        internal MovieList GetMovieList(int id)
+        {
+            return _context.MovieLists.FirstOrDefault(list => list.Id.Equals(id));
+        }
+
         internal async Task<int> CreateMovieReviewAsync(MovieReviewModel movieReviewModel)
         {
             var movieReview = await _context.MovieReviews.AddAsync(new MovieReview()
@@ -100,7 +136,7 @@ namespace FilmaiOutAPI.Services
                 LastEditedAt = DateTime.Now,
                 Score = movieReviewModel.Score,
                 FkUsers = movieReviewModel.FkUsers,
-                FkMovies = 1 /// temp
+                FkMovies = movieReviewModel.FkMovies
             }); 
             await _context.SaveChangesAsync();
 

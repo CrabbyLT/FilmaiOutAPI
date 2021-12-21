@@ -69,7 +69,7 @@ namespace FilmaiOutAPI.Controllers
         }
 
         [HttpGet("post/{id:int}/comment")]
-        public async Task<ActionResult> GetAllCommentsByPost(int id)
+        public ActionResult GetAllCommentsByPost(int id)
         {
             var posts = _service.GetComments(id);
             return new OkObjectResult(posts);
@@ -89,8 +89,8 @@ namespace FilmaiOutAPI.Controllers
         [HttpGet("post/{id:int}/comment/{commentId:int}")]
         public ActionResult GetComment(int id, int commentId)
         {
-            var posts = _service.GetComment(commentId);
-            return new OkObjectResult(posts);
+            var comment = _service.GetComment(commentId);
+            return new OkObjectResult(comment);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using FilmaiOutAPI.Models;
-using System;
+using FilmaiOutAPI.Models.DatabaseModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

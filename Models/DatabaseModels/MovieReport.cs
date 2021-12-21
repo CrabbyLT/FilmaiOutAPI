@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 
 #nullable disable
 
-namespace FilmaiOutAPI
+namespace FilmaiOutAPI.Models.DatabaseModels
 {
     public partial class MovieReport
     {
@@ -13,7 +12,7 @@ namespace FilmaiOutAPI
         public int Views { get; set; }
         public int TotalMovieLists { get; set; }
         public string FkUsers { get; set; }
-        public int? FkMovies { get; set; }
+        public string FkMovies { get; set; }
 
         public virtual Movie FkMoviesNavigation { get; set; }
         public virtual User FkUsersNavigation { get; set; }

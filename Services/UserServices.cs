@@ -1,5 +1,6 @@
 ﻿using FilmaiOutAPI.Models;
 using FilmaiOutAPI.Models.Auth;
+using FilmaiOutAPI.Models.DatabaseModels;
 using System.Threading.Tasks;
 
 namespace FilmaiOutAPI.Services

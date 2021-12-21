@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace FilmaiOutAPI
+namespace FilmaiOutAPI.Models.DatabaseModels
 {
     public partial class Movie
     {
@@ -15,7 +15,7 @@ namespace FilmaiOutAPI
             SubtitleLists = new HashSet<SubtitleList>();
         }
 
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public DateTime CreatedAt { get; set; }
         public int Duration { get; set; }
