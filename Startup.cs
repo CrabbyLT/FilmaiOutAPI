@@ -54,7 +54,7 @@ namespace FilmaiOutAPI
             app.UseCors(options =>
                 options
                 .AllowAnyMethod()
-                .AllowAnyHeader());
+                .AllowAnyHeader().AllowAnyOrigin());
 
             app.UseAuthorization();
 
