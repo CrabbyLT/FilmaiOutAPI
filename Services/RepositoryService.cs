@@ -91,6 +91,38 @@ namespace FilmaiOutAPI.Services
             return _context.MovieReviews.Take(10).Skip(0).ToList();
         }
 
+        internal async Task<int> CreateMovieReviewAsync(MovieReviewModel movieReviewModel)
+        {
+            var movieReview = await _context.MovieReviews.AddAsync(new MovieReview()
+            {
+                Text = movieReviewModel.Text,
+                CreatedAt = DateTime.Now,
+                LastEditedAt = DateTime.Now,
+                Score = movieReviewModel.Score,
+                FkUsers = movieReviewModel.FkUsers,
+                FkMovies = 1 /// temp
+            }); 
+            await _context.SaveChangesAsync();
+
+            return movieReview.Entity.Id;
+        }
+
+        internal async Task<int> UpdateMovieReviewAsync(MovieReviewModel movieReviewModel, int id)
+        {
+            var review = _context.MovieReviews.FirstOrDefault(p => p.Id.Equals(id));
+            if (review == null)
+            {
+                throw new ArgumentNullException(nameof(movieReviewModel));
+            }
+
+            review.Text = movieReviewModel.Text;
+            review.Score = movieReviewModel.Score;
+
+            _context.MovieReviews.Update(review);
+            await _context.SaveChangesAsync();
+            return review.Id;
+        }
+
         internal async Task DeleteMovieReview(int id)
         {
             var review = _context.MovieReviews.FirstOrDefault(p => p.Id.Equals(id));

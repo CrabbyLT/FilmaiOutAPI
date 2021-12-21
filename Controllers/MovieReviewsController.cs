@@ -24,6 +24,27 @@ namespace FilmaiOutAPI.Controllers
             return new OkObjectResult(reviews);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> CreateMovieListAsync([FromBody] MovieReviewModel movieReviewModel)
+        {
+            await _service.CreateReviewAsync(movieReviewModel);
+            return new OkObjectResult(new Response()
+            {
+                Status = StatusCodes.Status200OK,
+                Message = "Movie review created successfully"
+            });
+        }
+        [HttpPost("{id:int}")]
+        public async Task<ActionResult> UpdateMovieReviewAsync([FromBody] MovieReviewModel movieReviewModel, int id)
+        {
+            await _service.UpdateReviewAsync(movieReviewModel, id);
+            return new OkObjectResult(new Response()
+            {
+                Status = StatusCodes.Status200OK,
+                Message = "Movie list updated successfully"
+            });
+        }
+
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteUserAsync(int id)
         {
