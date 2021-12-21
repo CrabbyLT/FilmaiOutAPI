@@ -21,12 +21,9 @@ namespace FilmaiOutAPI.Controllers
         [HttpPost("login")]
         public ActionResult Login([FromQuery] LoginModel userLogin)
         {
-            return _userServices.LogUserIn(userLogin)
-                ? new OkObjectResult(new Response()
-                {
-                    Status = StatusCodes.Status200OK,
-                    Message = "User login successful"
-                })
+            var user = _userServices.LogUserIn(userLogin);
+            return user is not null
+                ? new AcceptedResult(nameof(Login), user)
                 : new NotFoundObjectResult(new Response()
                 {
                     Status = StatusCodes.Status404NotFound,

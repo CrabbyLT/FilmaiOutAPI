@@ -18,7 +18,9 @@ namespace FilmaiOutAPI
         public int Dislikes { get; set; }
         public DateTime CreatedAt { get; set; }
         public string Description { get; set; }
+        public string FkUsersName { get; set; }
 
+        public virtual User FkUsersNameNavigation { get; set; }
         public virtual ICollection<ListMovie> ListMovies { get; set; }
     }
 }

@@ -51,6 +51,11 @@ namespace FilmaiOutAPI
 
             app.UseRouting();
 
+            app.UseCors(options =>
+                options
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -200,15 +200,13 @@ namespace FilmaiOutAPI.Services
                 Email = user.Email,
                 Name = user.Name,
                 PasswordHash = user.PasswordHash
-            });
+            }); 
             await _context.SaveChangesAsync();
         }
 
-        internal bool CheckIfUserExists(LoginModel loginModel)
+        internal User CheckIfUserExists(LoginModel loginModel)
         {
-            var result = _context.Users.FirstOrDefault(u => u.Email.Equals(loginModel.Email) && u.PasswordHash.Equals(loginModel.PasswordHash));
-
-            return result != null;
+            return _context.Users.FirstOrDefault(u => u.Email.Equals(loginModel.Email) && u.PasswordHash.Equals(loginModel.PasswordHash)); 
         }
 
         internal bool DeleteUser(string name)

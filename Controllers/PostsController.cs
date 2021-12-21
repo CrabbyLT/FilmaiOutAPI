@@ -35,7 +35,7 @@ namespace FilmaiOutAPI.Controllers
         public async Task<ActionResult> CreatePostAsync([FromBody] PostModel postModel)
         {
             var postId = await _service.CreatePostAsync(postModel);
-            return CreatedAtAction(nameof(GetPost), new { id = postId }, postModel);
+            return new CreatedResult(nameof(GetPost), postId) ;
         }
 
         [HttpPut("post")]

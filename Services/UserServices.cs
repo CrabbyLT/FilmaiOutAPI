@@ -24,7 +24,7 @@ namespace FilmaiOutAPI.Services
             return true;
         }
 
-        public bool LogUserIn(LoginModel loginModel)
+        public User LogUserIn(LoginModel loginModel)
         {
             return _repositoryService.CheckIfUserExists(loginModel);
         }

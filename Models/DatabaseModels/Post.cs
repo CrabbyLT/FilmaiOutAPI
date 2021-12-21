@@ -20,7 +20,9 @@ namespace FilmaiOutAPI
         public int Dislikes { get; set; }
         public int Views { get; set; }
         public DateTime LastEditedAt { get; set; }
+        public string FkUsersName { get; set; }
 
+        public virtual User FkUsersNameNavigation { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
     }
 }

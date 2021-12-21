@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -29,7 +31,7 @@ namespace FilmaiOutAPI
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Lithuanian_Lithuania.1257");
+            modelBuilder.HasAnnotation("Relational:Collation", "en_US.utf8");
 
             modelBuilder.Entity<Comment>(entity =>
             {
@@ -37,7 +39,9 @@ namespace FilmaiOutAPI
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()");
 
                 entity.Property(e => e.Disabled).HasColumnName("disabled");
 
@@ -47,7 +51,9 @@ namespace FilmaiOutAPI
 
                 entity.Property(e => e.FkUsersName).HasColumnName("fk_users_name");
 
-                entity.Property(e => e.LastEditedAt).HasColumnName("last_edited_at");
+                entity.Property(e => e.LastEditedAt)
+                    .HasColumnName("last_edited_at")
+                    .HasDefaultValueSql("now()");
 
                 entity.Property(e => e.Likes).HasColumnName("likes");
 
@@ -76,7 +82,9 @@ namespace FilmaiOutAPI
 
                 entity.Property(e => e.Accepted).HasColumnName("accepted");
 
-                entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()");
 
                 entity.Property(e => e.FkCommentsId).HasColumnName("fk_comments_id");
 
@@ -146,7 +154,9 @@ namespace FilmaiOutAPI
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()");
 
                 entity.Property(e => e.Description)
                     .IsRequired()
@@ -154,11 +164,19 @@ namespace FilmaiOutAPI
 
                 entity.Property(e => e.Dislikes).HasColumnName("dislikes");
 
+                entity.Property(e => e.FkUsersName).HasColumnName("fk_users_name");
+
                 entity.Property(e => e.Likes).HasColumnName("likes");
 
                 entity.Property(e => e.Text)
                     .IsRequired()
                     .HasColumnName("text");
+
+                entity.HasOne(d => d.FkUsersNameNavigation)
+                    .WithMany(p => p.MovieLists)
+                    .HasForeignKey(d => d.FkUsersName)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("movie_lists_fk_users_name_fkey");
             });
 
             modelBuilder.Entity<MovieReport>(entity =>
@@ -175,7 +193,9 @@ namespace FilmaiOutAPI
 
                 entity.Property(e => e.FkUsers).HasColumnName("fk_users");
 
-                entity.Property(e => e.GeneratedAt).HasColumnName("generated_at");
+                entity.Property(e => e.GeneratedAt)
+                    .HasColumnName("generated_at")
+                    .HasDefaultValueSql("now()");
 
                 entity.Property(e => e.TotalMovieLists).HasColumnName("total_movie_lists");
 
@@ -200,7 +220,9 @@ namespace FilmaiOutAPI
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()");
 
                 entity.Property(e => e.Dislikes).HasColumnName("dislikes");
 
@@ -208,7 +230,9 @@ namespace FilmaiOutAPI
 
                 entity.Property(e => e.FkUsers).HasColumnName("fk_users");
 
-                entity.Property(e => e.LastEditedAt).HasColumnName("last_edited_at");
+                entity.Property(e => e.LastEditedAt)
+                    .HasColumnName("last_edited_at")
+                    .HasDefaultValueSql("now()");
 
                 entity.Property(e => e.Likes).HasColumnName("likes");
 
@@ -239,11 +263,17 @@ namespace FilmaiOutAPI
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()");
 
                 entity.Property(e => e.Dislikes).HasColumnName("dislikes");
 
-                entity.Property(e => e.LastEditedAt).HasColumnName("last_edited_at");
+                entity.Property(e => e.FkUsersName).HasColumnName("fk_users_name");
+
+                entity.Property(e => e.LastEditedAt)
+                    .HasColumnName("last_edited_at")
+                    .HasDefaultValueSql("now()");
 
                 entity.Property(e => e.Likes).HasColumnName("likes");
 
@@ -256,6 +286,12 @@ namespace FilmaiOutAPI
                     .HasColumnName("text");
 
                 entity.Property(e => e.Views).HasColumnName("views");
+
+                entity.HasOne(d => d.FkUsersNameNavigation)
+                    .WithMany(p => p.Posts)
+                    .HasForeignKey(d => d.FkUsersName)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("posts_fk_users_name_fkey");
             });
 
             modelBuilder.Entity<Subtitle>(entity =>
@@ -325,7 +361,9 @@ namespace FilmaiOutAPI
 
                 entity.Property(e => e.Age).HasColumnName("age");
 
-                entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasDefaultValueSql("now()");
 
                 entity.Property(e => e.Email)
                     .IsRequired()
