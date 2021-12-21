@@ -19,7 +19,7 @@ namespace FilmaiOutAPI.Controllers
         }
 
         [HttpPost("login")]
-        public ActionResult Login([FromQuery] LoginModel userLogin)
+        public ActionResult Login([FromBody] LoginModel userLogin)
         {
             var user = _userServices.LogUserIn(userLogin);
             return user is not null
@@ -32,7 +32,7 @@ namespace FilmaiOutAPI.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult> RegisterAsync([FromQuery] RegisterModel registerModel)
+        public async Task<ActionResult> RegisterAsync([FromBody] RegisterModel registerModel)
         {
             return await _userServices.RegisterAsync(registerModel)
                 ? new OkObjectResult(new Response()
