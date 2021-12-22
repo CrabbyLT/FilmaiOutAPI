@@ -11,3 +11,10 @@ services:
       - ./Database:/docker-entrypoint-initdb.d/
     ports:
       - "5435:5432"
+  api:
+    image: "filmaioutapi"
+    environment:
+      - ASPNET_ENV=DEVELOPMENT
+    ports:
+      - "3001:80"
+      - "3002:443"
