@@ -17,11 +17,17 @@ namespace FilmaiOutAPI.Controllers
             _service = service;
         }
 
-        [HttpGet("reviews")]
-        public ActionResult GetLikedMovies()
+        [HttpGet]
+        public ActionResult ListMovieLists()
         {
             var reviews = _service.GetMovieList();
             return new OkObjectResult(reviews);
+        }
+
+        [HttpGet("movie/{id}")]
+        public ActionResult GetMovie(string id)
+        {
+            return new OkObjectResult(_service.GetMovie(id));
         }
 
         [HttpDelete("{id:int}")]

@@ -38,6 +38,11 @@ namespace FilmaiOutAPI.Services
             return movieList.Id;
         }
 
+        internal Movie GetMovie(string id)
+        {
+            return _context.Movies.FirstOrDefault(movie => movie.Id.Equals(id));
+        }
+
         internal async Task AddMovieToMovieList(int movieListId, string movieImdbId)
         {
             var movieList = GetMovieList(movieListId);
@@ -117,7 +122,7 @@ namespace FilmaiOutAPI.Services
 
         internal IEnumerable<SubtitleList> GetSubList()
         {
-            return _context.SubtitleLists.Take(10).Skip(0).ToList();
+            return _context.SubtitleLists.Take(10).Skip(0).OrderByDescending(list => list.FkUsers).ToList();
         }
         internal async Task DeleteSubList(int id)
         {
@@ -131,7 +136,7 @@ namespace FilmaiOutAPI.Services
 
         internal IEnumerable<MovieReview> GetMovieReview()
         {
-            return _context.MovieReviews.Take(10).Skip(0).ToList();
+            return _context.MovieReviews.Take(10).Skip(0).OrderByDescending(list => list.Text).ToList();
         }
 
         internal MovieList GetMovieList(int id)
@@ -215,7 +220,7 @@ namespace FilmaiOutAPI.Services
 
         internal IEnumerable<Post> GetPosts()
         {
-            return _context.Posts.Take(10).Skip(0).ToList();
+            return _context.Posts.Take(10).Skip(0).OrderByDescending(post => post.Name).ToList();
         }
 
         internal async Task<int> UpdatePostAsync(PostUpdateModel postModel)

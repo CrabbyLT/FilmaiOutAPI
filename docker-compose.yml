@@ -12,7 +12,7 @@ services:
     ports:
       - "5435:5432"
   api:
-    image: "filmaioutapi"
+    build: .
     environment:
       - ASPNETCORE_ENVIRONMENT=DEVELOPMENT
     ports:

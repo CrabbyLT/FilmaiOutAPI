@@ -29,6 +29,12 @@ namespace FilmaiOutAPI.Services
         {
             return await _repository.CreateMovieListAsync(movieListModel);
         }
+
+        internal Movie GetMovie(string id)
+        {
+            return _repository.GetMovie(id);
+        }
+
         internal async Task<int> UpdateMovieList(string name, string description, int id)
         {
             return await _repository.UpdateMovieListAsync(name,description,id);
