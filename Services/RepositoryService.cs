@@ -239,7 +239,14 @@ namespace FilmaiOutAPI.Services
                 Text = commentModel.Text,
                 LastEditedAt = DateTime.Now
             };
-
+            foreach(var swearword in GetSwearWords())
+            {
+                if (comment.Text.Contains(swearword))
+                {
+                    comment.Text = "Šis komentaras buvo pašalintas dėl necenzūrinių žodžių";
+                    break;
+                }
+            }
             var commentEntity = await _context.Comments.AddAsync(comment);
             post.Comments.Add(comment);
             _context.Posts.Update(post);
@@ -304,6 +311,18 @@ namespace FilmaiOutAPI.Services
 
             return result != null;
         }
+
+        private static List<string> GetSwearWords()
+        {
+            var swearWordsList = new List<string>();
+            swearWordsList.Add("fuck");
+            swearWordsList.Add("blet");
+            swearWordsList.Add("lopas");
+            swearWordsList.Add("pydaras");
+            swearWordsList.Add("dūxas");
+            return swearWordsList;
+        }
+
         //private static Post UpdatePostFromPostUpdateModel(Post post, PostUpdateModel postModel)
         //{
         //    return new Post()
