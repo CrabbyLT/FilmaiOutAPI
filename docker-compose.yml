@@ -14,7 +14,6 @@ services:
   api:
     image: "filmaioutapi"
     environment:
-      - ASPNET_ENV=DEVELOPMENT
+      - ASPNETCORE_ENVIRONMENT=DEVELOPMENT
     ports:
-      - "3001:80"
-      - "3002:443"
+      - "5001:80"
