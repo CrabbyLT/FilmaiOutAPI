@@ -1,5 +1,7 @@
 ﻿#nullable disable
 
+using System.Text.Json.Serialization;
+
 namespace FilmaiOutAPI.Models.DatabaseModels
 {
     public partial class Subtitle
@@ -9,6 +11,7 @@ namespace FilmaiOutAPI.Models.DatabaseModels
         public int FinishAt { get; set; }
         public int? FkSubtitleLists { get; set; }
 
+        [JsonIgnore]
         public virtual SubtitleList FkSubtitleListsNavigation { get; set; }
     }
 }

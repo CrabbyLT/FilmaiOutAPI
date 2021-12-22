@@ -36,6 +36,19 @@ namespace FilmaiOutAPI.Controllers
             });
         }
 
+        [HttpGet("{id:int}")]
+        public ActionResult GetPersonalMovieList(int id)
+        {
+            var movieList = _service.GetPersonalMovieList(id);
+            return movieList is not null
+                ? new OkObjectResult(movieList)
+                : new NotFoundObjectResult(new Response()
+                {
+                    Status = StatusCodes.Status404NotFound,
+                    Message = $"No movie list is found based on {id}"
+                });
+        }
+
         [HttpPost]
         public async Task<ActionResult> CreateMovieListAsync([FromBody] MovieListModel subtitleListModel)
         {

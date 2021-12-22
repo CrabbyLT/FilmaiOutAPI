@@ -64,6 +64,18 @@ namespace FilmaiOutAPI.Services
             await _context.SaveChangesAsync();
         }
 
+        internal MovieList GetListMovie(int id)
+        {
+            var movieList = _context.MovieLists.FirstOrDefault(list => list.Id.Equals(id));
+            if (movieList != null)
+            {
+                var movies = _context.ListMovies.Where(list => list.FkMovieLists.Equals(id)).ToList();
+                movieList.ListMovies = movies;
+            }
+
+            return movieList;
+        }
+
         internal async Task<int> CreateMovieListAsync(MovieListModel movieListModel)
         {
             var subtitleList = await _context.MovieLists.AddAsync(new MovieList()

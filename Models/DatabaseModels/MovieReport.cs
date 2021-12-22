@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -14,7 +15,9 @@ namespace FilmaiOutAPI.Models.DatabaseModels
         public string FkUsers { get; set; }
         public string FkMovies { get; set; }
 
+        [JsonIgnore]
         public virtual Movie FkMoviesNavigation { get; set; }
+        [JsonIgnore]
         public virtual User FkUsersNavigation { get; set; }
     }
 }

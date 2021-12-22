@@ -1,5 +1,6 @@
 ﻿using FilmaiOutAPI.Models;
 using FilmaiOutAPI.Models.DatabaseModels;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -36,6 +37,11 @@ namespace FilmaiOutAPI.Services
         internal Task AddMovieToMovieList(int movieListId, string movieImdbId)
         {
             return _repository.AddMovieToMovieList(movieListId, movieImdbId);
+        }
+
+        internal MovieList GetPersonalMovieList(int id)
+        {
+            return _repository.GetListMovie(id);
         }
     }
 }

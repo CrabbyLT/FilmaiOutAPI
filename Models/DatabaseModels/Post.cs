@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -22,6 +23,7 @@ namespace FilmaiOutAPI.Models.DatabaseModels
         public DateTime LastEditedAt { get; set; }
         public string FkUsersName { get; set; }
 
+        [JsonIgnore]
         public virtual User FkUsersNameNavigation { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
     }

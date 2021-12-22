@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -20,6 +21,7 @@ namespace FilmaiOutAPI.Models.DatabaseModels
         public string Description { get; set; }
         public string FkUsersName { get; set; }
 
+        [JsonIgnore]
         public virtual User FkUsersNameNavigation { get; set; }
         public virtual ICollection<ListMovie> ListMovies { get; set; }
     }
