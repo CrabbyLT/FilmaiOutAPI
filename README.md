@@ -1,8 +1,13 @@
-# To launch application do:
+### To build application:
 docker build -t filmaioutapi .
+
+## To launch it:
 docker-compose up -d
 
-# You can now visit it at:
+## To stop it:
+docker-compose down
+
+### You can now visit it at:
 localhost:3001/swagger/index.html
 
 
