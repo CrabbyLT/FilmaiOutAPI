@@ -2,8 +2,12 @@ version: '3.8'
 
 services:
   postgres:
-    build:
-      context: ./Database
-      dockerfile: DOCKERFILE
+    image: "postgres:latest"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=filmai_out
+    volumes:
+      - ./Database:/docker-entrypoint-initdb.d/
     ports:
       - "5435:5432"
